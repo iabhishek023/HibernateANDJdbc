@@ -1,0 +1,58 @@
+package org.example;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class Main {
+    public static void main(String[] args) {
+
+        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+        // to see how IntelliJ IDEA suggests fixing it.
+        Students st1=new Students();
+        st1.setRollNo(4);
+        st1.setsName("Akash");
+        st1.setsAge(90);
+
+        Students st2=new Students();
+
+        Configuration cfg=new Configuration();
+        cfg.addAnnotatedClass(org.example.Students.class);
+        cfg.configure();
+
+        SessionFactory sf= cfg.buildSessionFactory();
+        Session session=sf.openSession();
+
+        //For insertion
+//        Transaction transaction=session.beginTransaction();
+//
+//        session.save(st);
+//        session.persist(st);
+
+//        transaction.commit();
+
+        //For Reterival of data
+//        st2=session.find(Students.class,4);
+
+
+        //FOr updation of data
+//        Transaction transaction=session.beginTransaction();
+//        session.merge(st1);
+//        transaction.commit();
+
+        //For removal of the data
+        st2=session.find(Students.class,3);
+        Transaction transaction=session.beginTransaction();
+        session.remove(st2);
+        transaction.commit();
+
+        session.close();
+        sf.close();
+
+        System.out.println(st2.getsName());
+    }
+}
